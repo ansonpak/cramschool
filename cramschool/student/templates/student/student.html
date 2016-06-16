@@ -1,0 +1,51 @@
+{% extends 'main/base.html' %}
+{% block contentName %}學生資料{% endblock %}
+{% block content %}
+{% if user.username == 'admin' %}
+<form action="{% url 'student:studentCreate' %}">
+  <button class="btn btn-default">新增學生</button>
+</form>
+{% endif %}
+<form class=form-horizontal method=get action={% url 'student:studentSearch' %}>
+  <input id=searchBox type=text name=searchTerm>
+  <input class="btn btn-default" type=submit value=查詢>
+</form>
+
+{% if students %}
+ <table class="table table-striped table-borderd table-hover">
+   <tr>
+      <th>學號</th>
+      <th>名稱</th>
+      <th>電話</th>
+      <th>電郵</th>
+    </tr>
+    {% for student in students %}
+    <tr>
+      {% if user.username == 'admin' %}
+      <td><a href="{% url 'student:studentUpdate' student.sid %}">{{student.sid}}</a></td>
+      {% endif %}
+      <td>{{student.sid}}</td>
+      <td>{{student.name}}</td>
+      <td>{{student.tel}}</td>
+      <td>{{student.email}}</td>
+    </tr>
+    {% endfor %}
+  </table>
+{% else %}
+<p><strong>目前尚未有會議記錄。</strong></p>
+{% endif %}
+
+<div class=pagination>
+  <span class=step-links>
+    {% if students.has_previous %}
+      <a href=?page={{students.previous_page_number}}>上一頁</a>
+    {% endif %}
+    <span class=current>
+      {{students.number}}/{{students.paginator.num_pages}}
+    </span>
+    {% if students.has_next %}
+      <a href=?page={{students.next_page_number}}>下一頁</a>
+    {% endif %}
+  </span>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'main/main.html' %}
+{% block contentName %}歡迎註冊{% endblock %}
+{% block content %}
+
+<form class="form-horizontal" role="form" method=post action={% url 'account:register' %} enctype=multipart/form-data>
+  {% csrf_token %}
+  {% for field in userForm %}
+    <div class="form-group">
+      <label class="control-label col-sm-2">{{field.label}}</label>
+      <div class="col-sm-10">{{field}}<span class=errorMessages>{{field.errors}}</span></div>
+    </div>
+  {% endfor %}
+  {% for field in userProfileForm %}
+    <div class="form-group">
+      <label class="control-label col-sm-2">{{field.label}}</label>
+      <div class="col-sm-10">{{field}}<span class=errorMessages>{{field.errors}}</span></div>
+    </div>
+  {% endfor %}
+  <button class="btn btn-default" type="submit">建立</button>  
+</form>
+{% endblock %}

@@ -1,0 +1,38 @@
+div#content {
+	padding-bottom: 100px;
+}
+
+li {
+	list-style: none;
+	}
+
+div#mainPhoto{
+	padding-top:10px;
+	padding-bottom: 50px;
+}
+
+html {
+	background: linear-gradient( #FFFFFF, #BBFFEE);
+  height: 100%;
+}
+body {
+	background: linear-gradient( #FFFFFF, #BBFFEE);
+  min-height: 100%;
+}
+
+table {
+	text-aline:left;
+}
+
+table td{
+	min-width:100px;
+}
+
+p.floatLeft {
+  float: left;
+  margin-right: 10px;
+}
+#teacherPhoto{
+  width: 100px;
+  height: 80px;
+}

@@ -1,0 +1,53 @@
+{% extends 'main/base.html' %}
+{% block contentName %}成績資料{% endblock %}
+{% block content %}
+{% if user.username == 'admin' %}
+<form action="{% url 'scores:scoresCreate' %}">
+  <button class="btn btn-default">新增成績</button>
+</form>
+{% endif %}
+<form class=form-horizontal method=get action={% url 'scores:scoresSearch' %}>
+  <input id=searchBox type=text name=searchTerm>
+  <input class="btn btn-default" type=submit value=查詢>
+</form>
+
+{% if scoress %}
+ <table class="table table-striped table-borderd table-hover">
+   <tr>
+      <th>學生編號</th>
+      <th>教師編號</th>
+      <th>課堂編號</th>
+      <th>成績編號</th>
+      <th>成績</th>
+    </tr>
+    {% for scores in scoress %}
+    <tr>
+      <td>{{scores.sid}}</td>
+      <td>{{scores.tid}}</td>
+      <td>{{scores.cid}}</td>
+      {% if user.username == 'admin' %}
+      <td><a href="{% url 'scores:scoresUpdate' scores.scid %}">{{scores.scid}}</a></td>
+      {% endif %}
+      <td>{{scores.scid}}</td>
+      <td>{{scores.score}}</td>
+    </tr>
+    {% endfor %}
+  </table>
+{% else %}
+<p><strong>目前尚未有成績資料。</strong></p>
+{% endif %}
+
+<div class=pagination>
+  <span class=step-links>
+    {% if scoress.has_previous %}
+      <a href=?page={{scoress.previous_page_number}}>上一頁</a>
+    {% endif %}
+    <span class=current>
+      {{scoress.number}}/{{scoress.paginator.num_pages}}
+    </span>
+    {% if scoress.has_next %}
+      <a href=?page={{scoress.next_page_number}}>下一頁</a>
+    {% endif %}
+  </span>
+</div>
+{% endblock %}
